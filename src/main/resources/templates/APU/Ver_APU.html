@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang=xmlns:th="http://www.thymeleaf.org" "en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de APU</title>
+    <div th:replace="Menu.html"></div>
+
+    <div id="greenNotification" th:if="${param.exitoGuardado}" class="notification green">
+        <span>El APU se ha guardado correctamente </span>
+        <span class="close" onclick="closeNotification('greenNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorGuardado}" class="notification red">
+        <span>Ha ocurrido un error al guardar el APU </span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+    <div id="orangeNotification" th:if="${param.exitoOcultar}" class="notification orange">
+        <span>El APU se ha dado de baja </span>
+        <span class="close" onclick="closeNotification('orangeNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorGuardado}" class="notification red">
+        <span>Ha ocurrido un error al dar de baja el APU </span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+
+    <div class="contenedor-principal" id="contenedor-move">
+        <a class="boton-volver" href="/Proyectos">VOLVER</a>
+        <div class="contenedor-play-subproyecto">
+            <div class="proyecto-play">
+                <div class="contenedor-proyecto">
+                    <div class="nombre">
+                        <a>LISTADO DE APU</a>
+                    </div>
+                </div>
+
+
+                <form th:action="@{'/APU'}" method="get">
+                    <input class="cuadro-texto" type="text" name="keyword" placeholder="Buscar por nombre" th:value="${param.keyword}">
+                    <input type="image" class="icon-busqueda" th:src="@{/imagenes/lupa.png}"/>
+                </form>
+                <br>
+
+            </div>
+        </div>
+        <tr th:each="apu : ${apus}">
+            <div class="contenedor-play-subproyecto">
+                <div class="proyecto-play">
+                    <div class="contenedor-proyecto">
+                        <div class="nombre">
+                            <a th:text="${apu.nombre}"></a>
+                        </div>
+                        <div class="logos-proyecto">
+                            <a th:href="@{'/APU/' + ${apu.id} + '/Editar'}"><img
+                                    class="icon-proyecto" src="../../imagenes/editar.png"></a> <a
+                                th:href="@{'/APU/' + ${apu.id} + '/Eliminar'}"><img
+                                class="icon-proyecto" src="../../imagenes/delete.png"
+                                onclick="return confirmarOcultar();"></a>
+                        </div>
+                    </div>
+                    <div class="ubicacion">
+                        <a>UNIDAD</a>
+                        <div class="nombre-ubicacion">
+                            <a th:text="${apu.unidad}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </tr>
+        <ul class="pagination" th:if="${apus.totalElements > 0}">
+
+
+            <li th:if="${apus.hasPrevious()}">
+                <a th:href="@{${'/APU'}(keyword=${keyword}, page=1)}"><<</a>
+            </li>
+
+            <li th:if="${apus.hasPrevious()}">
+                <a th:href="@{${'/APU'}(keyword=${keyword}, page=${apus.number})}"><</a>
+            </li>
+
+            <li th:each="pageNumber : ${#numbers.sequence(1, apus.totalPages)}">
+                <a th:if="${pageNumber > apus.number - 3 && pageNumber < apus.number + 5}"
+                   th:href="@{${'/APU'}(keyword=${keyword}, page=${pageNumber})}"
+                   th:classappend="${pageNumber - 1 == apus.number ? 'active' : ''}" th:text="${pageNumber}">
+
+                </a>
+            </li>
+
+            <li th:if="${apus.hasNext()}">
+                <a th:href="@{${'/APU'}(keyword=${keyword}, page=${apus.number + 2})}">></a>
+            </li>
+            <li th:if="${apus.hasNext()}">
+                <a th:href="@{${'/APU'}(keyword=${keyword}, page=${apus.totalPages})}">>></a>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+    </body>
+
+    </html>

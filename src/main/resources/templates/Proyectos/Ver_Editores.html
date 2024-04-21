@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Editores</title>
+    <div th:replace="Menu.html"></div>
+
+    <div id="greenNotification" th:if="${param.exitoEditor}" class="notification green">
+        <span>El editor se ha agregado correctamente </span>
+        <span class="close" onclick="closeNotification('greenNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorEditor}" class="notification red">
+        <span>Ha ocurrido un error al agregar el editor </span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+
+
+    <div id="orangeNotification" th:if="${param.exitoOcultar}" class="notification orange">
+        <span>Se ha eliminado el editor</span>
+        <span class="close" onclick="closeNotification('orangeNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorOcultar}" class="notification red">
+        <span>Ha ocurrido un error al intentar eliminar el editor</span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+    <div class="contenedor-principal" id="contenedor-move">
+        <a class="boton-volver" href="/Proyectos">VOLVER</a>
+        <div class="contenedor-play-subproyecto">
+            <div class="proyecto-play">
+                <div class="contenedor-proyecto">
+                    <div class="nombre">
+                        <a th:text="'LISTADO DE EDITORES DE ' + ${proyecto.nombre}"></a>
+                    </div>
+                </div>
+                <form th:action="@{'/Proyectos/' + ${proyecto.id} + '/Editores'}" method="get">
+                    <input class="cuadro-texto" type="text" name="keyword" placeholder="Buscar por correo"
+                           th:value="${param.keyword}">
+                    <input type="image" class="icon-busqueda" th:src="@{/imagenes/lupa.png}"/>
+                </form>
+            </div>
+        </div>
+        <tr th:each="editor : ${editores}">
+            <div class="contenedor-play-subproyecto">
+                <div class="proyecto-play">
+                    <div class="contenedor-proyecto">
+                        <div class="nombre">
+                            <a th:text="${editor.username}"></a>
+                        </div>
+                        <div class="logos-proyecto">
+                            <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores/' + ${editor.id} + '/Eliminar'}"
+                               onclick="return confirmarOcultar();"><img
+                                    class="icon-proyecto" src="../../imagenes/delete.png"></a>
+                        </div>
+                    </div>
+                    <div class="ubicacion">
+                        <a>NOMBRE</a>
+                        <div class="nombre-ubicacion">
+                            <a th:text="${editor.nombre}"></a>
+                        </div>
+                    </div>
+                    <div class="ubicacion">
+                        <a>APELLIDO</a>
+                        <div class="nombre-ubicacion">
+                            <a th:text="${editor.apellido}"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </tr>
+        <a class="boton-subproyecto" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores/Nuevo_Editor'}">AÑADIR EDITOR</a>
+        <ul class="pagination" th:if="${editores.totalElements > 0}">
+            <li th:if="${editores.hasPrevious()}">
+                <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'(keyword=${keyword}, page=1)}"><<</a>
+            </li>
+            <li th:if="${editores.hasPrevious()}">
+                <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'(keyword=${keyword}, page=${editores.number})}"><</a>
+            </li>
+            <li th:each="pageNumber : ${#numbers.sequence(1, editores.totalPages)}">
+                <a th:if="${pageNumber > editores.number - 3 && pageNumber < editores.number + 5}"
+                   th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'(keyword=${keyword}, page=${pageNumber})}"
+                   th:classappend="${pageNumber - 1 == editores.number ? 'active' : ''}" th:text="${pageNumber}">
+                </a>
+            </li>
+            <li th:if="${editores.hasNext()}">
+                <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'(keyword=${keyword}, page=${editores.number + 2})}">></a>
+            </li>
+            <li th:if="${editores.hasNext()}">
+                <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'(keyword=${keyword}, page=${editores.totalPages})}">>></a>
+            </li>
+        </ul>
+
+    </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+    </body>
+
+</html>

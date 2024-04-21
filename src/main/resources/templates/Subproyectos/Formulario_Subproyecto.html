@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Subproyecto</title>
+    <div th:replace="Menu.html"></div>
+        <div class="contenedor">
+        <form th:action="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos/Guardar'}" th:object="${subproyecto}" method="POST">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="${proyecto.id}">
+            <input type="hidden" th:field="${subproyecto.fechaCreacion}">
+            <div class="formulario">
+                <div class="contenedor-formulario">
+                    <div class="nombre-proyecto">
+                        <label for="nombre-proyecto">NOMRRE DEL SUBPROYECTO*</label>
+                    </div>
+                    <div class="texto">
+                        <input class="cuadro-texto" input type="text" id="nombre" name="nombre" th:field="*{nombre}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="botones">
+            	<button type="submit" class="boton boton-verde">GUARDAR</button>
+                <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'}">
+        			<button type="button" class="boton boton-rojo">CANCELAR</button>
+    			</a>
+            </form>
+        </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

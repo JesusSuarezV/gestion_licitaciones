@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Proyectos</title>
+	<div th:replace="Menu.html"></div>
+
+	<div id="greenNotification" th:if="${param.exitoGuardado}" class="notification green">
+		<span>El proyecto se ha guardado correctamente </span>
+		<span class="close" onclick="closeNotification('greenNotification')">×</span>
+	</div>
+
+	<div id="blueNotification" th:if="${param.exitoOcultar}" class="notification blue">
+		<span>Se ha dado de baja el proyecto</span>
+		<span class="close" onclick="closeNotification('blueNotification')">×</span>
+	</div>
+
+	<div id="redNotification" th:if="${param.errorGuardado}" class="notification red">
+		<span>Ha ocurrido un error al guardar el proyecto </span>
+		<span class="close" onclick="closeNotification('redNotification')">×</span>
+	</div>
+
+	<div id="redNotification" th:if="${param.errorProyecto}" class="notification red">
+		<span>Error: Este proyecto no existe </span>
+		<span class="close" onclick="closeNotification('redNotification')">×</span>
+	</div>
+
+
+	<div class="contenedor">
+			<form th:action="@{${ruta}}" method="get">
+				<input class="cuadro-texto" type="text" name="keyword" placeholder="Buscar por nombre" th:value="${param.keyword}">
+				<input type="image" class="icon-busqueda" th:src="@{/imagenes/lupa.png}"/>
+			</form>
+			<br>
+		<tr th:each="proyecto : ${proyectos}">
+			<div class="cuadro-proyectos">
+				<img src="../imagenes/proyectos.png">
+				<div class="proyecto">
+					<div class="nombre">
+						<a th:text="${proyecto.nombre}"></a>
+					</div>
+					<div class="logos-proyecto">
+						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'}"><img class="icon-proyecto" th:src="@{/imagenes/play.png}"></a>
+						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Eliminar'}" onclick="return confirmarOcultar();"><img class="icon-proyecto" src="../../imagenes/delete.png"></a>
+						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editar'}"><img class="icon-proyecto" src="../../imagenes/editar.png"></a> 
+						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Visualizar'}"><img class="icon-proyecto" src="../../imagenes/ver.png"></a>
+						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'}"><img class="icon-proyecto" src="../../imagenes/editores.png"></a>
+						<!--						<a th:href="#"><img class="icon-proyecto" src="../imagenes/ver.png"></a>-->
+					</div>
+				</div>
+			</div>
+			<br></br>
+			</tr>
+
+			<ul class="pagination"th:if="${proyectos.totalElements > 0}">
+
+
+				<li th:if="${proyectos.hasPrevious()}">
+					<a th:href="@{${ruta}(keyword=${keyword}, page=1)}"><<</a>
+				</li>
+
+				<li th:if="${proyectos.hasPrevious()}">
+					<a th:href="@{${ruta}(keyword=${keyword}, page=${proyectos.number})}"><</a>
+				</li>
+
+				<li th:each="pageNumber : ${#numbers.sequence(1, proyectos.totalPages)}">
+					<a th:if="${pageNumber > proyectos.number - 3 && pageNumber < proyectos.number + 5}" th:href="@{${ruta}(keyword=${keyword}, page=${pageNumber})}"
+					   th:classappend="${pageNumber - 1 == proyectos.number ? 'active' : ''}" th:text="${pageNumber}">
+
+					</a>
+				</li>
+
+				<li th:if="${proyectos.hasNext()}">
+					<a th:href="@{${ruta}(keyword=${keyword}, page=${proyectos.number + 2})}">></a>
+				</li>
+				<li th:if="${proyectos.hasNext()}">
+					<a th:href="@{${ruta}(keyword=${keyword}, page=${proyectos.totalPages})}">>></a>
+				</li>
+			</ul>
+
+		</div>
+		</div>
+		<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

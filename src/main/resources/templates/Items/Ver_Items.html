@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Items </title>
+    <div th:replace="Menu.html"></div>
+
+    <div id="greenNotification" th:if="${param.exitoGuardado}" class="notification green">
+        <span>El item se ha guardado correctamente </span>
+        <span class="close" onclick="closeNotification('greenNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorGuardado}" class="notification red">
+        <span>Ha ocurrido un error al guardar el item </span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+    <div id="orangeNotification" th:if="${param.exitoOcultar}" class="notification orange">
+        <span>El item se ha dado de baja </span>
+        <span class="close" onclick="closeNotification('orangeNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorGuardado}" class="notification red">
+        <span>Ha ocurrido un error al dar de baja el item </span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+
+    <div class="contenedor-principal" id="contenedor-move">
+        <a class="boton-volver" href="/Proyectos">VOLVER</a>
+        <div class="contenedor-play-subproyecto">
+            <div class="proyecto-play">
+                <div class="contenedor-proyecto">
+                    <div class="nombre">
+                        <a>LISTADO DE ITEMS</a>
+                    </div>
+                </div>
+
+
+                <form th:action="@{'/Items'}" method="get">
+                    <input class="cuadro-texto" type="text" name="keyword" placeholder="Buscar por nombre"
+                           th:value="${param.keyword}">
+                    <input type="image" class="icon-busqueda" th:src="@{/imagenes/lupa.png}"/>
+                </form>
+                <br>
+            </div>
+        </div>
+
+        <tr th:each="item : ${items}">
+            <div class="contenedor-play-subproyecto">
+                <div class="proyecto-play">
+                    <div class="contenedor-proyecto">
+                        <div class="nombre">
+                            <a th:text="${item.nombre}"></a>
+                        </div>
+                        <div class="logos-proyecto">
+
+                            <a th:href="@{'/Items/' + ${item.id} + '/Editar'}"><img class="icon-proyecto"
+                                                                                    src="../imagenes/editar.png"></a>
+                            <a th:href="@{'/Items/' + ${item.id} + '/Eliminar'}"><img class="icon-proyecto"
+                                                                                      src="../imagenes/delete.png"
+                                                                                      onclick="return confirmarOcultar();"></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </tr>
+        <ul class="pagination" th:if="${items.totalElements > 0}">
+
+
+            <li th:if="${items.hasPrevious()}">
+                <a th:href="@{${'/Items'}(keyword=${keyword}, page=1)}"><<</a>
+            </li>
+
+            <li th:if="${items.hasPrevious()}">
+                <a th:href="@{${'/Items'}(keyword=${keyword}, page=${items.number})}"><</a>
+            </li>
+
+            <li th:each="pageNumber : ${#numbers.sequence(1, items.totalPages)}">
+                <a th:if="${pageNumber > items.number - 3 && pageNumber < items.number + 5}"
+                   th:href="@{${'/Items'}(keyword=${keyword}, page=${pageNumber})}"
+                   th:classappend="${pageNumber - 1 == items.number ? 'active' : ''}" th:text="${pageNumber}">
+
+                </a>
+            </li>
+
+            <li th:if="${items.hasNext()}">
+                <a th:href="@{${'/Items'}(keyword=${keyword}, page=${items.number + 2})}">></a>
+            </li>
+            <li th:if="${items.hasNext()}">
+                <a th:href="@{${'/Items'}(keyword=${keyword}, page=${items.totalPages})}">>></a>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+    </body>
+
+</html>

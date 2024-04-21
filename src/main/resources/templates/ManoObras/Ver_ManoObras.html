@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Mano de Obra </title>
+    <div th:replace="Menu.html"></div>
+    <div id="greenNotification" th:if="${param.exitoGuardado}" class="notification green">
+        <span>La mano de obra se ha guardado correctamente </span>
+        <span class="close" onclick="closeNotification('greenNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorGuardado}" class="notification red">
+        <span>Ha ocurrido un error al guardar la mano de obra </span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorManoObra}" class="notification red">
+        <span>Esta mano de obra no existe</span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+    <div id="orangeNotification" th:if="${param.exitoOcultar}" class="notification orange">
+        <span>La mano de obra se ha dado de baja </span>
+        <span class="close" onclick="closeNotification('orangeNotification')">×</span>
+    </div>
+
+    <div id="redNotification" th:if="${param.errorOcultar}" class="notification red">
+        <span>Ha ocurrido un error al dar de baja la mano de obra </span>
+        <span class="close" onclick="closeNotification('redNotification')">×</span>
+    </div>
+
+    <div class="contenedor-principal" id="contenedor-move">
+        <a class="boton-volver" href="/Proyectos">VOLVER</a>
+        <div class="contenedor-play-subproyecto">
+            <div class="proyecto-play">
+                <div class="contenedor-proyecto">
+                    <div class="nombre">
+                        <a>LISTADO DE MANO DE OBRA</a>
+                    </div>
+                </div>
+                <form th:action="@{'/ManoObras'}" method="get">
+                    <input class="cuadro-texto" type="text" name="keyword" placeholder="Buscar por nombre"
+                           th:value="${param.keyword}">
+                    <input type="image" class="icon-busqueda" th:src="@{/imagenes/lupa.png}"/>
+                </form>
+            </div>
+        </div>
+
+        <tr th:each="manoObra : ${manoObras}">
+            <div class="contenedor-play-subproyecto">
+                <div class="proyecto-play">
+                    <div class="contenedor-proyecto">
+                        <div class="nombre">
+                            <a th:text="${manoObra.nombre}"></a>
+                        </div>
+                        <div class="logos-proyecto">
+
+                            <a th:href="@{'/ManoObras/' + ${manoObra.id} + '/Editar'}"><img class="icon-proyecto"
+                                                                                            src="../imagenes/editar.png"></a>
+                            <a th:href="@{'/ManoObras/' + ${manoObra.id} + '/Eliminar'}"><img class="icon-proyecto"
+                                                                                              src="../imagenes/delete.png"
+                                                                                              onclick="return confirmarOcultar();"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </tr>
+        <ul class="pagination" th:if="${manoObras.totalElements > 0}">
+            <li th:if="${manoObras.hasPrevious()}">
+                <a th:href="@{${'/ManoObras'}(keyword=${keyword}, page=1)}"><<</a>
+            </li>
+            <li th:if="${manoObras.hasPrevious()}">
+                <a th:href="@{${'/ManoObras'}(keyword=${keyword}, page=${manoObras.number})}"><</a>
+            </li>
+            <li th:each="pageNumber : ${#numbers.sequence(1, manoObras.totalPages)}">
+                <a th:if="${pageNumber > manoObras.number - 3 && pageNumber < manoObras.number + 5}"
+                   th:href="@{${'/ManoObras'}(keyword=${keyword}, page=${pageNumber})}"
+                   th:classappend="${pageNumber - 1 == manoObras.number ? 'active' : ''}" th:text="${pageNumber}">
+                </a>
+            </li>
+            <li th:if="${manoObras.hasNext()}">
+                <a th:href="@{${'/ManoObras'}(keyword=${keyword}, page=${manoObras.number + 2})}">></a>
+            </li>
+            <li th:if="${manoObras.hasNext()}">
+                <a th:href="@{${'/ManoObras'}(keyword=${keyword}, page=${manoObras.totalPages})}">>></a>
+            </li>
+        </ul>
+
+
+    </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+    </body>
+
+</html>

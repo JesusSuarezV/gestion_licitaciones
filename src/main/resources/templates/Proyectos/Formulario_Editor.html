@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crear Material</title>
+<div th:replace="Menu.html"></div>
+
+	<div id="redNotification" th:if="${param.errorCorreo}" class="notification red">
+		<span>Este usuario ya esta registrad o no existe</span>
+		<span class="close" onclick="closeNotification('redNotification')">×</span>
+	</div>
+
+<div class="contenedor-principal" id="contenedor-move">
+	<a class="boton-volver" href="/Materiales">VOLVER</a>
+	<form th:action="@{'/Proyectos/' + ${proyecto.id} + '/Editores/Asignar_Editor' }" method="post">>
+		<div class="contenedor-play-subproyecto">
+			<div class="proyecto-play">
+				<div class="nombre">
+					<a th:text="'AÑADIR EDITOR DE ' + ${proyecto.nombre}"></a>
+				</div>
+				<div class="ubicacion">
+					<a>CORREO</a>
+					<div class="texto">
+						<input class="cuadro-texto" type="email" id="correo"
+							name="correo" placeholder="Ingrese el correo electronico" required>
+					</div>
+				</div>
+			</div>
+			<button type="submit" class="boton-subproyecto">GUARDAR EDITOR</button>
+		</div>
+		</form>
+</div>
+</div>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

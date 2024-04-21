@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Item</title>
+    <div th:replace="Menu.html"></div>
+    <div class="contenedor-principal" id="contenedor-move">
+        <a class="boton-volver" href="/Usuarios">VOLVER</a>
+        <form th:action="@{/Usuarios/Guardar_Rol}" method="post">
+            <input type="hidden" name="id" th:value="${id}">
+            <div class="contenedor-play-subproyecto">
+                <div class="proyecto-play">
+
+                    <div class="ubicacion">
+                        <a>SELECCIÓN DE ROL</a>
+                        <label for="itemId" class="texto">
+                            <select class="cuadro-texto" id="itemId" name="role" required>
+                                <option value="">Seleccione el rol</option>
+                                <option th:each="rol : ${roles}" th:value="${rol}" th:text="${rol}"></option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="boton-subproyecto">ASIGNAR ROL</button>
+            </div>
+        </form>
+    </div>
+    </div>
+    </div>
+    <script th:src="@{/js/script.js}"></script>
+    </body>
+
+</html>

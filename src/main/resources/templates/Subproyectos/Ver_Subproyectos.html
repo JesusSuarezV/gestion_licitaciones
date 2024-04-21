@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Subproyectos</title>
+    <div th:replace="Menu.html"></div>
+        <div class="contenedor-principal" id="contenedor-move">
+            <a class="boton-volver" href="/Proyectos">VOLVER</a>
+            <div class="contenedor-play">
+                <div class="proyecto-play">
+                    <div class="nombre">
+                        <a th:text="${proyecto.nombre}"></a>
+                    </div>
+                    <div class="ubicacion">
+                        <a>UBICACIÓN</a>
+                        <div class="nombre-ubicacion">
+                            <a th:text="${proyecto.ubicacion}"></a>
+                        </div>
+                    </div>
+                    <form th:action="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'}" method="get">
+                        <input class="cuadro-texto" type="text" name="keyword" placeholder="Buscar por nombre" th:value="${param.keyword}">
+                        <input type="image" class="icon-busqueda" th:src="@{/imagenes/lupa.png}"/>
+                    </form>
+                </div>
+            </div>
+
+            <br>
+            <tr th:each="subproyecto : ${subproyectos}">
+            <div class="contenedor-play-subproyecto">
+                <div class="proyecto-play">
+                    <div class="contenedor-proyecto">
+                        <div class="nombre">
+                            <a th:text="${subproyecto.nombre}"></a>
+                        </div>
+                        <div class="logos-proyecto">
+                        
+                            <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos/' + ${subproyecto.id} + '/Items'}"><img class="icon-proyecto" src="../../imagenes/play.png"></a>
+                            <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos/' + ${subproyecto.id} + '/Editar'}"><img class="icon-proyecto" src="../../imagenes/editar.png"></a>
+                            <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos/' + ${subproyecto.id} + '/Eliminar'}" onclick="return confirmarOcultar();"><img class="icon-proyecto" src="../../imagenes/delete.png"></a>
+                        </div>
+                    </div>
+                    <div class="ubicacion">
+                        <a  th:text="'COSTO ' + ${subproyecto.getNombre()}" ></a>
+                        <div class="nombre-ubicacion">
+                            <!-- <a th:text="${servicio.obtenerValorDeUnSubproyecto(subproyecto)}"></a>-->
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <br></br>
+             </tr>
+             <a class="boton-subproyecto" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos/Nuevo_Subproyecto'}">CREAR SUBPROYECTO</a>
+            <ul class="pagination"th:if="${subproyectos.totalElements > 0}">
+
+
+                <li th:if="${subproyectos.hasPrevious()}">
+                    <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'(keyword=${keyword}, page=1)}"><<</a>
+                </li>
+
+                <li th:if="${subproyectos.hasPrevious()}">
+                    <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'(keyword=${keyword}, page=${subproyectos.number})}"><</a>
+                </li>
+
+                <li th:each="pageNumber : ${#numbers.sequence(1, subproyectos.totalPages)}">
+                    <a th:if="${pageNumber > subproyectos.number - 3 && pageNumber < subproyectos.number + 5}" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'(keyword=${keyword}, page=${pageNumber})}"
+                       th:classappend="${pageNumber - 1 == subproyectos.number ? 'active' : ''}" th:text="${pageNumber}">
+
+                    </a>
+                </li>
+
+                <li th:if="${subproyectos.hasNext()}">
+                    <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'(keyword=${keyword}, page=${subproyectos.number + 2})}">></a>
+                </li>
+                <li th:if="${subproyectos.hasNext()}">
+                    <a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'(keyword=${keyword}, page=${subproyectos.totalPages})}">>></a>
+                </li>
+            </ul>
+         </div>
+     </div>
+     <script th:src="@{/js/script.js}"></script>
+ </body>
+
+ </html>
