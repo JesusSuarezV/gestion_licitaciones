@@ -35,6 +35,7 @@ public class APUItemSubproyectoController {
         model.addAttribute("itemSubproyecto", itemSubproyectoService.obtenerItemSubproyecto(idItemSubproyecto).get());
         model.addAttribute("apus", apuItemSubproyectoService.buscarAPUItemSubproyecto(idItemSubproyecto, keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
+        model.addAttribute("service", apuItemSubproyectoService);
         return "APUItemSubproyectos/Ver_APU";
     }
 
@@ -48,11 +49,29 @@ public class APUItemSubproyectoController {
     }
 
     @PostMapping("/Asignar_APU")
-    public String asignarAPU(@PathVariable Long idItemSubproyecto, @RequestParam Long apuId, @RequestParam float cantidad){
+    public String asignarAPU(@PathVariable Long idItemSubproyecto, @RequestParam Long apuId, @RequestParam double cantidad){
         ItemSubproyecto itemSubproyecto = itemSubproyectoService.obtenerItemSubproyecto(idItemSubproyecto).get();
         APUItemSubproyecto apuItemSubproyecto = new APUItemSubproyecto();
         apuItemSubproyecto.setItemSubproyecto(itemSubproyecto);
         apuItemSubproyecto.setApu(apuService.obtenerAPU(apuId).get());
+        apuItemSubproyecto.setCantidad(cantidad);
+        apuItemSubproyectoService.guardarAPUItemSubproyecto(apuItemSubproyecto);
+        return "redirect:/Proyectos/{idProyecto}/Subproyectos/{idSubproyecto}/Items/{idItemSubproyecto}/APU";
+    }
+
+    @GetMapping("/{id}/Editar")
+    public String mostrarFormularioDeEdicionDelAPU(@PathVariable long id, Model model){
+
+        APUItemSubproyecto apuItemSubproyecto = apuItemSubproyectoService.obtenerAPUItemSubproyecto(id).get();
+        model.addAttribute("apuItemSubproyecto", apuItemSubproyecto);
+        model.addAttribute("cantidad", apuItemSubproyecto.getCantidad());
+        return "APUItemSubproyectos/Editar_APU";
+    }
+
+    @PostMapping("/{id}/Actualizar")
+    public String actualizarAPU(@PathVariable long id, @RequestParam double cantidad){
+
+        APUItemSubproyecto apuItemSubproyecto = apuItemSubproyectoService.obtenerAPUItemSubproyecto(id).get();
         apuItemSubproyecto.setCantidad(cantidad);
         apuItemSubproyectoService.guardarAPUItemSubproyecto(apuItemSubproyecto);
         return "redirect:/Proyectos/{idProyecto}/Subproyectos/{idSubproyecto}/Items/{idItemSubproyecto}/APU";
@@ -63,5 +82,12 @@ public class APUItemSubproyectoController {
 
         apuItemSubproyectoService.ocultarAPUItemSubproyecto(id);
         return "redirect:/Proyectos/{idProyecto}/Subproyectos/{idSubproyecto}/Items/{idItemSubproyecto}/APU";
+    }
+
+    @GetMapping("/{id}/Recursos")
+    public String mostrarInterfazDeRecursos(@PathVariable long id, Model model){
+        APUItemSubproyecto apuItemSubproyecto = apuItemSubproyectoService.obtenerAPUItemSubproyecto(id).get();
+        model.addAttribute("apuItemSubproyecto", apuItemSubproyecto);
+        return "Recursos/Recursos";
     }
 }

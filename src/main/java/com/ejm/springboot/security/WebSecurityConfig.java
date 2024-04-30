@@ -39,8 +39,9 @@ import javax.sql.DataSource;
 
                                     //.requestMatchers("/personas/nueva").hasAnyRole("ADMIN")
                                     //.requestMatchers("/personas/editar/*","/personas/eliminar/*").hasRole("ADMIN")
-                                    .requestMatchers("/Registro",
-                                            "/Iniciar_Sesion","/Confirmacion/**").anonymous()
+                                    .requestMatchers("/Proyectos/Mis_Proyectos/**", "/Proyectos/Crear_Proyectos", "/Proyectos/Guardar", "Proyectos/{id}/Editar","Proyectos/{id}/Eliminar", "Proyectos/{id}/Editores").hasAnyAuthority("SADMIN", "ADMIN")
+                                    .requestMatchers("/Usuarios/**", "/Items/**", "/APU/**", "/Materiales/**", "/Maquinarias/**", "/ManoObras/**").hasAuthority("SADMIN")
+                                    .requestMatchers("/Registro", "/Iniciar_Sesion", "/Recuperar_Contrasena/**", "/Confirmacion/**", "/Recuperacion/**").anonymous()
 
                                     .anyRequest().authenticated()
                                     )

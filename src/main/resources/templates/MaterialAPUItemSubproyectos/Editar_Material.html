@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar APU Asignado</title>
+<div th:replace="Menu.html"></div>
+<div class="contenedor-principal" id="contenedor-move">
+	<a class="boton-volver"th:href="@{'/Proyectos/' + ${materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${materialAPUItemSubproyecto.apuItemSubproyecto.id} + '/Recursos/Materiales'}">VOLVER</a>
+	<form th:action="@{'/Proyectos/' + ${materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${materialAPUItemSubproyecto.apuItemSubproyecto.id} + '/Recursos/Materiales/' + ${materialAPUItemSubproyecto.id} +'/Actualizar'}" th:object="${materialAPUItemSubproyecto}" method="POST">
+		<div class="contenedor-play-subproyecto">
+			<div class="proyecto-play">
+			
+				</div>
+				<br>
+			<div class="ubicacion">
+				<a>PROVEEDOR</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="number" id="proveedor" name="proveedor" th:field="*{proveedor}" placeholder="Digite el nuevo codigo del proveedor:  " required>
+				</div>
+
+			</div>
+			<br>
+
+			<div class="ubicacion">
+				<a>CANTIDAD</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="cantidad" name="cantidad" th:field="*{cantidad}" placeholder="Digite la nueva cantidad: " required pattern="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+
+			</div>
+			<br>
+			<div class="ubicacion">
+				<a>VALOR UNITARIO</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="valorUnitario" name="valorUnitario" th:field="*{valorUnitario}" placeholder="Digite el nuevo valor unitario: " required pattern="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+
+			</div>
+			<button type="submit" class="boton-subproyecto">ASIGNAR APU</button>
+		</div>
+		</form>
+</div>
+</div>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

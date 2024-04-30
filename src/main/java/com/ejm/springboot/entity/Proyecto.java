@@ -36,7 +36,17 @@ public class Proyecto {
     )
     private List<Usuario> usuarios = new ArrayList<>();
 
+    @OneToMany(mappedBy = "proyecto", cascade = CascadeType.ALL)
+    private List<Subproyecto> subproyectos = new ArrayList<>();
+
     private boolean enabled;
 
+    public double getCosto(){
+        double precio = 0.0;
+        for(Subproyecto subproyecto: subproyectos){
+            if(subproyecto.isEnabled()) precio+= subproyecto.getCosto();
+        }
+        return Math.round(precio*100d)/100d;
+    }
 
 }

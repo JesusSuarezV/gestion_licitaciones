@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar APU Asignado</title>
+<div th:replace="Menu.html"></div>
+<div class="contenedor-principal" id="contenedor-move">
+	<a class="boton-volver"th:href="@{'/Proyectos/' + ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.id} + '/Recursos/Transportes'}">VOLVER</a>
+	<form th:action="@{'/Proyectos/' + ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${transporte.materialAPUItemSubproyecto.apuItemSubproyecto.id} + '/Recursos/Transportes/' + ${transporte.id} +'/Actualizar'}" th:object="${transporte}" method="POST">
+		<div class="contenedor-play-subproyecto">
+			<div class="proyecto-play">
+			
+				</div>
+				<br>
+			<div class="ubicacion">
+				<a>DISTANCIA</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="distancia" name="distancia" th:field="*{distancia}" placeholder="Digite la nueva distancia: " required pattern="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+
+			</div>
+			<br>
+			<div class="ubicacion">
+				<a>PRECIO</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="precio" name="precio" th:field="*{precio}" placeholder="Digite el nuevo precio: " required pattern="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+
+			</div>
+			<button type="submit" class="boton-subproyecto">ASIGNAR TRANSPORTE</button>
+		</div>
+		</form>
+</div>
+</div>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

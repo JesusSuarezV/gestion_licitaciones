@@ -27,4 +27,5 @@ public class Material {
     private boolean enabled;
 
     private LocalDate fechaCreacion;
+
 }

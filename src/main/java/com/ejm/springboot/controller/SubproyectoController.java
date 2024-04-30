@@ -3,6 +3,7 @@ package com.ejm.springboot.controller;
 import com.ejm.springboot.entity.Proyecto;
 import com.ejm.springboot.entity.Subproyecto;
 import com.ejm.springboot.service.ProyectoService;
+import com.ejm.springboot.service.SesionService;
 import com.ejm.springboot.service.SubproyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -23,14 +24,19 @@ public class SubproyectoController {
     @Autowired
     ProyectoService proyectoService;
 
+    @Autowired
+    SesionService sesionService;
+
     @GetMapping
     public String verSubproyectos(Model model, @PathVariable Long idProyecto, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int page) {
-
-        model.addAttribute("proyecto", proyectoService.obtenerProyecto(idProyecto).get());
+        Proyecto proyecto = proyectoService.obtenerProyecto(idProyecto).get();
+        boolean owner = (proyecto.getCreador().getUsername().equals(sesionService.getUsernameFromSession()));
+        model.addAttribute("proyecto", proyecto);
         model.addAttribute("subproyectos", subproyectoService.buscarSubproyectos(keyword, idProyecto, PageRequest.of(page - 1, 3)));
 
         model.addAttribute("keyword", keyword);
-        model.addAttribute("ruta", "waos");
+        model.addAttribute("ruta", "");
+        model.addAttribute("owner", owner);
         return "Subproyectos/Ver_Subproyectos";
 
     }

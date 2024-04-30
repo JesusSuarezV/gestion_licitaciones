@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang=xmlns:th="http://www.thymeleaf.org" "en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lista de Transportes Asignados</title>
+<div th:replace="Menu.html"></div>
+<div class="contenedor-principal" id="contenedor-move">
+	<a class="boton-volver" th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos'}">VOLVER</a>
+	<div class="contenedor-play-subproyecto">
+		<div class="proyecto-play">
+			<div class="contenedor-proyecto">
+				<div class="nombre">
+					<a th:text="'TRANSPORTE - ' +${apuItemSubproyecto.apu.nombre}"></a>
+				</div>
+			</div>
+			<form th:action="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes'}"
+				  method="get">
+				<input class="cuadro-texto" type="text" name="keyword" placeholder="Buscar por nombre"
+					   th:value="${param.keyword}">
+				<input type="image" class="icon-busqueda" th:src="@{/imagenes/lupa.png}"/>
+			</form>
+		</div>
+	</div>
+		<tr th:each="transporte : ${transportes}">
+		<div class="contenedor-play-subproyecto">
+			<div class="proyecto-play">
+				<div class="contenedor-proyecto">
+					<div class="nombre">
+						<a th:text="${transporte.materialAPUItemSubproyecto.material.nombre}"></a>
+					</div>
+					<div class="logos-proyecto">
+						<a th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes/'+ ${transporte.id} + '/Editar'}"><img class="icon-proyecto" th:src="@{/imagenes/editar.png}"></a>
+						<a th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes/'+ ${transporte.id} + '/Eliminar'}" onclick="return confirmarOcultar();"><img class="icon-proyecto" th:src="@{/imagenes/delete.png}"></a>
+					</div>
+				</div>
+				<div class="ubicacion">
+					<a>CANTIDAD</a>
+					<div class="nombre-ubicacion">
+						<a th:text="${transporte.materialAPUItemSubproyecto.cantidad}"></a>
+					</div>
+				</div>
+				<div class="ubicacion">
+					<a>DISTANCIA</a>
+					<div class="nombre-ubicacion">
+						<a th:text="${transporte.distancia}"></a>
+					</div>
+				</div>
+				<div class="ubicacion">
+					<a>M3*KM</a>
+					<div class="nombre-ubicacion">
+						<a th:text="${transporte.CantidadKM}"></a>
+					</div>
+				</div>
+                <div class="ubicacion">
+                    <a>PRECIO X KM</a>
+                    <div class="nombre-ubicacion">
+                        <a th:text="${transporte.precio}"></a>
+                    </div>
+                </div>
+				<div class="ubicacion">
+					<a>V/PARCIAL</a>
+					<div class="nombre-ubicacion">
+						<a th:text="${transporte.valorParcial}"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br>
+	</tr>
+	<a class="boton-subproyecto" th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes/Agregar_Transporte'}">ASIGNAR TRANSPORTE</a>
+	<ul class="pagination" th:if="${transportes.totalElements > 0}">
+		<li th:if="${transportes.hasPrevious()}">
+			<a th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes'(keyword=${keyword}, page=1)}">&lt;&lt;</a>
+		</li>
+
+		<li th:if="${transportes.hasPrevious()}">
+			<a th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes'(keyword=${keyword}, page=${transportes.number})}">&lt;</a>
+		</li>
+
+		<li th:each="pageNumber : ${#numbers.sequence(1, transportes.totalPages)}">
+			<a th:if="${pageNumber > transportes.number - 3 && pageNumber < transportes.number + 5}"
+			   th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes'(keyword=${keyword}, page=${pageNumber})}"
+			   th:classappend="${pageNumber - 1 == transportes.number ? 'active' : ''}" th:text="${pageNumber}">
+			</a>
+		</li>
+
+		<li th:if="${transportes.hasNext()}">
+			<a th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes'(keyword=${keyword}, page=${transportes.number + 2})}">&gt;</a>
+		</li>
+
+		<li th:if="${transportes.hasNext()}">
+			<a th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/Transportes'(keyword=${keyword}, page=${transportes.totalPages})}">>></a>
+		</li>
+	</ul>
+
+
+
+</div>
+</div>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

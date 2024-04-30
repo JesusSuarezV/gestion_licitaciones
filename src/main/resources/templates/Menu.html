@@ -30,18 +30,18 @@
                     <i class="fa-solid fa-angle-right list-arrow" style="color: #ffffff;"></i>
                 </div>
                 <ul class="lista-secundaria">
-                    <li class="lista-item-3 lista-subitem">
+                    <li class="lista-item-3 lista-subitem" sec:authorize="hasAuthority('SADMIN') or hasAuthority('ADMIN')">
                         <a class="lista-link" href="/Proyectos/Mis_Proyectos">VER MIS PROYECTOS</a>
                     </li>
                     <li class="lista-item-3 lista-subitem">
                         <a class="lista-link" href="/Proyectos">VER PROYECTOS</a>
                     </li>
-                    <li class="lista-item-3 lista-subitem">
+                    <li class="lista-item-3 lista-subitem" sec:authorize="hasAuthority('SADMIN') or hasAuthority('ADMIN')">
                         <a class="lista-link" href="/Proyectos/Nuevo_Proyecto">CREAR PROYECTOS</a>
                     </li>
                 </ul>
             </li>
-            <li class="lista-principal lista-principal--click">
+            <li class="lista-principal lista-principal--click" sec:authorize="hasAuthority('SADMIN')">
                 <div class="lista-item">
                     <a class="lista-link">ITEMS</a>
                     <i class="fa-solid fa-angle-right list-arrow" style="color: #ffffff;"></i>
@@ -55,7 +55,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="lista-principal  lista-principal--click">
+            <li class="lista-principal  lista-principal--click" sec:authorize="hasAuthority('SADMIN')">
                 <div class="lista-item">
                     <a class="lista-link">APU</a>
                     <i class="fa-solid fa-angle-right list-arrow" style="color: #ffffff;"></i>
@@ -69,7 +69,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="lista-principal lista-principal--click">
+            <li class="lista-principal lista-principal--click" sec:authorize="hasAuthority('SADMIN')">
                 <div class="lista-item">
                     <a class="lista-link">RECURSOS</a>
                     <i class="fa-solid fa-angle-right list-arrow" style="color: #ffffff;"></i>
@@ -119,7 +119,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="lista-principal  lista-principal--click" sec:authorize="hasAuthority('ADMIN')">
+            <li class="lista-principal  lista-principal--click" sec:authorize="hasAuthority('SADMIN')">
                 <div class="lista-item">
                     <a class="lista-link">USUARIOS</a>
                     <i class="fa-solid fa-angle-right list-arrow" style="color: #ffffff;"></i>

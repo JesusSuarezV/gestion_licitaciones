@@ -24,7 +24,7 @@ public class UsuarioController {
     public String verMateriales(Model model, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int page) {
         model.addAttribute("usuarios", usuarioService.buscarUsuario(keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
-        return "/Usuarios/Ver_Usuarios";
+        return "Usuarios/Ver_Usuarios";
     }
 
 

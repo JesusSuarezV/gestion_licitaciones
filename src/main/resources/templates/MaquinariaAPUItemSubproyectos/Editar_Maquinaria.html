@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editar APU Asignado</title>
+<div th:replace="Menu.html"></div>
+<div class="contenedor-principal" id="contenedor-move">
+	<a class="boton-volver"th:href="@{'/Proyectos/' + ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.id} + '/Recursos/Maquinarias'}">VOLVER</a>
+	<form th:action="@{'/Proyectos/' + ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${maquinariaAPUItemSubproyecto.apuItemSubproyecto.id} + '/Recursos/Maquinarias/' + ${maquinariaAPUItemSubproyecto.id} +'/Actualizar'}" th:object="${maquinariaAPUItemSubproyecto}" method="POST">
+		<div class="contenedor-play-subproyecto">
+			<div class="proyecto-play">
+			
+				</div>
+
+			<br>
+
+			<div class="ubicacion">
+				<a>TARIFA</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="tarifa" name="tarifa" th:field="*{tarifa}" placeholder="Digite la nueva tarifa: " required pattern="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+
+			</div>
+			<br>
+			<div class="ubicacion">
+				<a>RDTO</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="rdto" name="rdto" th:field="*{rdto}" placeholder="Digite el nuevo valor del rdto: " required pattern="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+
+			</div>
+			<button type="submit" class="boton-subproyecto">ACTUALIZAR MAQUINARIA</button>
+		</div>
+		</form>
+</div>
+</div>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>

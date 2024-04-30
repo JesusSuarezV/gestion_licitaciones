@@ -35,6 +35,7 @@ public class ItemSubproyectoController {
         model.addAttribute("subproyecto", subproyectoService.obtenerSubproyecto(idSubproyecto).get());
         model.addAttribute("items", itemSubproyectoService.buscarItemSubproyecto(idSubproyecto, keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
+        model.addAttribute("service", itemSubproyectoService);
         return "ItemSubproyectos/Ver_Items";
 
     }

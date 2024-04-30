@@ -43,7 +43,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             String token = UUID.randomUUID().toString();
             TokenRegistro tokenRegistro = new TokenRegistro(token, LocalDate.now(), usuario, true);
             tokenRegistroRepository.save(tokenRegistro);
-            String url = "http://localhost:8080/Confirmacion/" + token;
+            String url = "https://gestionlicitaciones-production.up.railway.app/Confirmacion/" + token;
             String cuerpo = "Por favor, confirme su cuenta en el siguiente enlace: <a href=\"" + url + "\">" + url + "</a>";
 
             mailService.enviarCorreo(usuario.getUsername(), "ENLACE DE ACTIVACIÓN EJM", cuerpo);
@@ -55,6 +55,13 @@ public class UsuarioServiceImpl implements UsuarioService {
             return false;
 
         }
+    }
+
+    @Override
+    public Boolean cambiarContraseña(Usuario usuario, String password) {
+        usuario.setPassword(password);
+        usuarioRepository.save(usuario);
+        return true;
     }
 
     @Override

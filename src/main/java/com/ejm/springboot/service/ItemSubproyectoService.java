@@ -14,4 +14,5 @@ public interface ItemSubproyectoService {
     Optional<ItemSubproyecto> obtenerItemSubproyecto(Long id);
 
     boolean ocultarItemSubproyecto (Long id);
+
 }

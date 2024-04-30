@@ -5,6 +5,24 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
   </head>
   <body>
+
+  <div id="greenNotification" th:if="${param.exitoRegistro}" class="notification green">
+    <span>Su cuenta ha sido activada exitosamente</span>
+    <span class="close" onclick="closeNotification('greenNotification')">×</span>
+  </div>
+  <div id="greenNotification" th:if="${param.exitoCambio}" class="notification green">
+    <span>Su contraseña ha sido cambiada exitosamente</span>
+    <span class="close" onclick="closeNotification('greenNotification')">×</span>
+  </div>
+  <div id="redNotification" th:if="${param.errorTokenRecovery}" class="notification red">
+    <span>Enlace de recuperación expirado o inexistente</span>
+    <span class="close" onclick="closeNotification('redNotification')">×</span>
+  </div>
+
+  <div id="redNotification" th:if="${param.errorToken}" class="notification red">
+    <span>Enlace de activación expirado o inexistente</span>
+    <span class="close" onclick="closeNotification('redNotification')">×</span>
+  </div>
     <div class="pantalla-de-incio">
       <div class="div">
         <div class="overlap-group">
@@ -46,5 +64,6 @@
         </div>
       </div>
     </div>
+  <script src="../js/script.js"></script>
   </body>
 </html>

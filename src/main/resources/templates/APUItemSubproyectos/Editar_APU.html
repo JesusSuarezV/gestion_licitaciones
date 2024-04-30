@@ -7,8 +7,8 @@
 <title>Editar APU Asignado</title>
 <div th:replace="Menu.html"></div>
 <div class="contenedor-principal" id="contenedor-move">
-	<a class="boton-volver" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos/' + ${subproyecto.id} + '/Items/' + ${itemSubproyecto.id} + '/APU'}">VOLVER</a>
-	<form th:action="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos/'+ ${subproyecto.id} +'/Items/' + ${itemSubproyecto.id} +'/APU/' + ${apu.id} + '/Actualizar'}" th:object="${apu}" method="POST">
+	<a class="boton-volver" th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU'}">VOLVER</a>
+	<form th:action="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/'+ ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} +'/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} +'/APU/' + ${apuItemSubproyecto.id} + '/Actualizar'}" th:object="${apuItemSubproyecto}" method="POST">
 		<div class="contenedor-play-subproyecto">
 			<div class="proyecto-play">
 			

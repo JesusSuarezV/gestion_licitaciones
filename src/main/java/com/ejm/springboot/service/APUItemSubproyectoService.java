@@ -16,4 +16,14 @@ public interface APUItemSubproyectoService {
     Optional<APUItemSubproyecto> obtenerAPUItemSubproyecto(Long id);
 
     boolean ocultarAPUItemSubproyecto (Long id);
+
+    double obtenerValorMateriales(APUItemSubproyecto apuItemSubproyecto);
+    double obtenerValorTransporte(APUItemSubproyecto apuItemSubproyecto);
+    double obtenerValorMaquinaria(APUItemSubproyecto apuItemSubproyecto);
+
+    double obtenerValorManoObra(APUItemSubproyecto apuItemSubproyecto);
+
+    double obtenerValorAPU(APUItemSubproyecto apuItemSubproyecto);
+
+    double obtenerValorTotalAPU(APUItemSubproyecto apuItemSubproyecto);
 }

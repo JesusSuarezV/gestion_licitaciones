@@ -15,20 +15,19 @@
                 </thead>
                 <tbody> <!--Cuerpo de la tabla-->
                     <tr>
-                        <td class="subtitulo" colspan="7">PRESUPUESTO DE OBRA</td>
+                        <td class="subtitulo" colspan="7"><strong>PRESUPUESTO DE OBRA</strong></td>
                     </tr>
                     <tr> <!--Filas-->
-                        <td>ITEMS</td> <!--Columnas-->
-                        <td>DESCRIPCIÓN ACTIVIDADES</td>
-                        <td>UND</td>
-                        <td>CANT</td>
-                        <td>VR. UNIT</td>
-                        <td>VR. PARCIAL</td>
-                        <td>VR. CAPITULO</td>
+                        <td><strong>ITEMS</strong></td> <!--Columnas-->
+                        <td><strong>DESCRIPCIÓN ACTIVIDADES</strong></td>
+                        <td><strong>UND</strong></td>
+                        <td><strong>CANT</strong></td>
+                        <td><strong>VR. UNIT</strong></td>
+                        <td><strong>VR. PARCIAL</strong></td>
+                        <td><strong>VR. CAPITULO</strong></td>
                     </tr>
                 </tbody>
-                <tbody th:utext="${elementos}">
-                </tbody>
+                <tbody th:utext="${htmlContent}"></tbody>
             </table>
             <a class="boton-subproyecto" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Visualizar/Generar_PDF'}">DESCARGAR</a>
         </div>

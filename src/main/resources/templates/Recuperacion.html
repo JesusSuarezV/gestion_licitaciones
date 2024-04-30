@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Inicio de Sesión</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="../css/estilos.css">
+    <link rel="stylesheet" href="../css/inicio.css">
+    <link rel="stylesheet" href="../css/proyectos.css">
+    <script src="https://kit.fontawesome.com/43d3343120.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<form id="cuadro" th:action="@{'/Recuperacion/' + ${token} + '/Exito'}" method="post">
+
+    <a class="linkcasa" href="/	">
+        <img class="casita" src="../imagenes/inicio.png">
+    </a>
+    <img class="imagen" src="../imagenes/usuario.png" id="imagen">
+    <br>
+    <label for="password">
+        <i class="fa-solid fa-lock"></i>
+        <input id="password" type="password"  name="password" required autofocus="autofocus" placeholder="CONTRASEÑA">
+    </label>
+    <br>
+    <button id="registro" class="boton-login" type="submit">CAMBIAR CONTRASEÑA</button>
+    <br>
+</form>
+<script src="../js/script.js"></script>
+</body>
+
+</html>

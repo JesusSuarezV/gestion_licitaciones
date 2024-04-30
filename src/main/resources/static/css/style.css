@@ -318,3 +318,34 @@ a {
   left: 1271px;
   object-fit: cover;
 }
+.notification {
+    padding: 15px;
+    color: #fff;
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 9999;
+    border-radius: 5px;
+    border: 1px solid transparent;
+}
+
+.blue {
+    background-color: #007bff; /* Azul */
+}
+
+.green {
+    background-color: #28a745; /* Verde */
+}
+
+.red {
+    background-color: #dc3545; /* Rojo */
+}
+
+.orange {
+    background-color: #ed5c2c; /* Naranja */
+}
+
+.notification .close {
+    float: right;
+    cursor: pointer;
+}

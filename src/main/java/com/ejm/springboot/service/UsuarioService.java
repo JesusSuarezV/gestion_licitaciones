@@ -11,6 +11,8 @@ public interface UsuarioService {
 
     Boolean guardarUsuario(Usuario usuario);
 
+    Boolean cambiarContraseña(Usuario usuario, String password);
+
     Usuario obtenerUsuarioPorUsername(String username);
 
     Page<Usuario> buscarUsuario(String username, Pageable pageable);

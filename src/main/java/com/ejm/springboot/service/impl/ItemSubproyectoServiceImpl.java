@@ -1,10 +1,13 @@
 package com.ejm.springboot.service.impl;
 
+import com.ejm.springboot.entity.APUItemSubproyecto;
 import com.ejm.springboot.entity.ItemSubproyecto;
 import com.ejm.springboot.entity.Proyecto;
 import com.ejm.springboot.entity.Subproyecto;
+import com.ejm.springboot.repository.APUItemSubproyectoRepository;
 import com.ejm.springboot.repository.ItemSubproyectoRepository;
 import com.ejm.springboot.repository.SubproyectoRepository;
+import com.ejm.springboot.service.APUItemSubproyectoService;
 import com.ejm.springboot.service.ItemSubproyectoService;
 import com.ejm.springboot.service.SubproyectoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,7 +27,7 @@ public class ItemSubproyectoServiceImpl implements ItemSubproyectoService {
     @Override
     public Page<ItemSubproyecto> buscarItemSubproyecto(long idSubproyecto, String nombre, Pageable pageable) {
         Optional<Subproyecto> optionalSubproyecto = subproyectoService.obtenerSubproyecto(idSubproyecto);
-        if(optionalSubproyecto.isPresent()){
+        if (optionalSubproyecto.isPresent()) {
             Subproyecto subproyecto = optionalSubproyecto.get();
             return itemSubproyectoRepository.findBySubproyectoAndEnabledTrueAndItem_NombreContainingIgnoreCaseOrderByItem_NombreAsc(subproyecto, nombre, pageable);
         } else return null;
@@ -61,4 +65,5 @@ public class ItemSubproyectoServiceImpl implements ItemSubproyectoService {
             return false;
         }
     }
+
 }

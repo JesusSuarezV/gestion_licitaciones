@@ -1,6 +1,12 @@
 package com.ejm.springboot.controller;
 
+import com.ejm.springboot.entity.APUItemSubproyecto;
+import com.ejm.springboot.entity.ItemSubproyecto;
 import com.ejm.springboot.entity.Proyecto;
+import com.ejm.springboot.entity.Subproyecto;
+import com.ejm.springboot.repository.APUItemSubproyectoRepository;
+import com.ejm.springboot.repository.ItemSubproyectoRepository;
+import com.ejm.springboot.repository.SubproyectoRepository;
 import com.ejm.springboot.service.ProyectoService;
 import com.ejm.springboot.service.SesionService;
 import com.ejm.springboot.service.UsuarioService;
@@ -16,8 +22,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/Proyectos")
@@ -31,6 +39,15 @@ public class ProyectoController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private SubproyectoRepository subproyectoRepository;
+
+    @Autowired
+    private ItemSubproyectoRepository itemSubproyectoRepository;
+
+    @Autowired
+    private APUItemSubproyectoRepository apuItemSubproyectoRepository;
 
     @GetMapping("/Mis_Proyectos")
     public String verMisProyectos(Model model, @Param("keyword") String keyword, @RequestParam(defaultValue = "1") int page) {
@@ -115,6 +132,40 @@ public class ProyectoController {
 
         if (!proyectoService.ocultarProyecto(id)) return "redirect:/Proyectos/Mis_Proyectos?errorOcultar";
         else return "redirect:/Proyectos/Mis_Proyectos?exitoOcultar";
+
+    }
+
+    @GetMapping("/{id}/Visualizar")
+    public String visualizarProyecto(@PathVariable Long id, Model model) {
+        Proyecto proyecto = proyectoService.obtenerProyecto(id).get();
+        String htmlContent="";
+        model.addAttribute("proyecto",proyecto);
+        List<Subproyecto> subproyectos = subproyectoRepository.findByProyectoAndEnabledTrueOrderByNombreAsc(proyecto);
+        double contadorItem = 0;
+        double contadorAPU = 0;
+
+
+        for (Subproyecto subproyecto:subproyectos){
+            htmlContent+="<tr><td colspan='7'><strong>" + subproyecto.getNombre() + "</strong></td></tr>";
+            List<ItemSubproyecto> itemSubproyectos = itemSubproyectoRepository.findBySubproyectoAndEnabledTrueOrderByItem_NombreAsc(subproyecto);
+            contadorItem=0;
+            for (ItemSubproyecto itemSubproyecto : itemSubproyectos) {
+                contadorItem++;
+                htmlContent+="<tr><td><strong>"+ contadorItem  +"</strong></td><td><strong>" + itemSubproyecto.getItem().getNombre() + "</strong></td><td></td><td></td><td></td><td></td><td><strong>$ " + itemSubproyecto.getValorCapitulo() + "</strong></td></tr>";
+                List<APUItemSubproyecto> apuItemSubproyectos = apuItemSubproyectoRepository.findByItemSubproyectoAndEnabledTrueOrderByApu_NombreAsc(itemSubproyecto);
+                contadorAPU = 0;
+                for (APUItemSubproyecto apuItemSubproyecto:apuItemSubproyectos){
+                    contadorAPU ++;
+                    htmlContent+="<tr><td><strong>"+ (int)contadorItem + "." + (int)contadorAPU  +"</strong></td><td>" + apuItemSubproyecto.getApu().getNombre() + "</td><td>"+ apuItemSubproyecto.getApu().getUnidad() +"</td><td>"+ Math.round(apuItemSubproyecto.getCantidad()*100d)/100d +"</td><td>$ " + apuItemSubproyecto.getValorUnitario() + "</td><td>$ "+ apuItemSubproyecto.getValorParcial() +"</td><td></td></tr>";
+
+                }
+            }
+            htmlContent += "<tr><td></td><td class='texto-izquierda' colspan = '5'><strong>SUBTOTAL " + subproyecto.getNombre() + "</strong></td><td><strong>$ " + subproyecto.getCosto() + "</strong></td></tr>";
+        }
+        htmlContent += "<tr><td></td><td class='texto-izquierda' colspan = '5'><strong>COSTO TOTAL DEL PROYECTO</strong></td><td><strong>$ " + proyecto.getCosto() + "</strong></td></tr>";
+        model.addAttribute("htmlContent", htmlContent);
+
+        return "Proyectos/Visualizar_Proyecto";
 
     }
 

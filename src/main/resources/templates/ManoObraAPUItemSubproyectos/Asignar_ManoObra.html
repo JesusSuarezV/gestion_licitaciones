@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asignar Mano de Obra</title>
+<div th:replace="Menu.html"></div>
+<div class="contenedor-principal" id="contenedor-move">
+	<a class="boton-volver"th:href="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/ManoObras'}">VOLVER</a>
+	<form th:action="@{'/Proyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.proyecto.id} + '/Subproyectos/' + ${apuItemSubproyecto.itemSubproyecto.subproyecto.id} + '/Items/' + ${apuItemSubproyecto.itemSubproyecto.id} + '/APU/'+ ${apuItemSubproyecto.id} + '/Recursos/ManoObras/Asignar_ManoObra'}" th:object="${manoObrasAPUItemSubproyecto}" method="POST">
+		<div class="contenedor-play-subproyecto">
+			<div class="proyecto-play">
+			
+				<div class="ubicacion">
+					<a>MANO DE OBRA</a>
+					<label for="manoObraId" class="texto">
+						<select class="cuadro-texto" id="manoObraId" name="manoObraId" required>
+                        <option th:each="manoObra : ${manoObras}" th:value="${manoObra.id}" th:text="${manoObra.nombre}"></option>
+						</select>
+					</label>
+
+
+				</div>
+				<br>
+			</div>
+			<br>
+			<div class="ubicacion">
+				<a>CANTIDAD</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="cantidad" name="cantidad" required="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+			</div>
+			<br>
+			<div class="ubicacion">
+				<a>JORNAL</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="jornal" name="jornal" required="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+			</div>
+			<br>
+			<div class="ubicacion">
+				<a>PRESTACION</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="prestacion" name="prestacion" required="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+			</div>
+			<br>
+			<div class="ubicacion">
+				<a>RDTO</a>
+				<div class="texto">
+					<input class="cuadro-texto" type="text" id="rdto" name="rdto" required pattern="^\d+(\.\d+)?$" title="Número entero o con punto decimal">
+				</div>
+			</div>
+			<button type="submit" class="boton-subproyecto">ASIGNAR MANO DE OBRA</button>
+		</div>
+		</form>
+</div>
+</div>
+</div>
+<script th:src="@{/js/script.js}"></script>
+</body>
+
+</html>
