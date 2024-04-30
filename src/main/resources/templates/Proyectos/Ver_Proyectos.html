@@ -43,10 +43,10 @@
 					</div>
 					<div class="logos-proyecto">
 						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Subproyectos'}"><img class="icon-proyecto" th:src="@{/imagenes/play.png}"></a>
-						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Eliminar'}" onclick="return confirmarOcultar();"><img class="icon-proyecto" src="../../imagenes/delete.png"></a>
-						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editar'}"><img class="icon-proyecto" src="../../imagenes/editar.png"></a> 
-						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Visualizar'}"><img class="icon-proyecto" src="../../imagenes/ver.png"></a>
-						<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'}"><img class="icon-proyecto" src="../../imagenes/editores.png"></a>
+							<a th:if="${autor}" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Eliminar'}" onclick="return confirmarOcultar();"><img class="icon-proyecto" src="../../imagenes/delete.png"></a>
+							<a th:if="${autor}" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editar'}"><img class="icon-proyecto" src="../../imagenes/editar.png"></a>
+							<a th:href="@{'/Proyectos/' + ${proyecto.id} + '/Visualizar'}"><img class="icon-proyecto" src="../../imagenes/ver.png"></a>
+							<a th:if="${autor}" th:href="@{'/Proyectos/' + ${proyecto.id} + '/Editores'}"><img class="icon-proyecto" src="../../imagenes/editores.png"></a>
 						<!--						<a th:href="#"><img class="icon-proyecto" src="../imagenes/ver.png"></a>-->
 					</div>
 				</div>

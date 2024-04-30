@@ -21,7 +21,7 @@ public class MaterialController {
     public String verMateriales(Model model, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int page) {
         model.addAttribute("materiales", materialService.buscarMaterial(keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
-        return "/Materiales/Ver_Materiales";
+        return "Materiales/Ver_Materiales";
     }
 
     @GetMapping("/Nuevo_Material")

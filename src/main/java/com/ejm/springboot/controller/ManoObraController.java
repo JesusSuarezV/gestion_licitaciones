@@ -22,7 +22,7 @@ public class ManoObraController {
     public String verManoObras(Model model, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int page) {
         model.addAttribute("manoObras", manoObraService.buscarManoObra(keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
-        return "/ManoObras/Ver_ManoObras";
+        return "ManoObras/Ver_ManoObras";
     }
 
     @GetMapping("/Nueva_ManoObra")

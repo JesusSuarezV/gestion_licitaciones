@@ -55,7 +55,7 @@ public class PDFControlador {
 
     	Proyecto proyecto = proyectoService.obtenerProyecto(id).get();
         response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment; filename=" + proyecto.getNombre() +".pdf");
+        response.setHeader("Content-Disposition", "attachment; filename= informe_0" + proyecto.getId() +".pdf");
 
 
         double contadorItem = 0;

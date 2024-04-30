@@ -23,7 +23,7 @@ public class APUController {
 
         model.addAttribute("apus", apuService.buscarAPU(keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
-        return "/APU/Ver_APU";
+        return "APU/Ver_APU";
 
     }
 

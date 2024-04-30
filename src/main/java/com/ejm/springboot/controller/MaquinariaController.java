@@ -22,7 +22,7 @@ public class MaquinariaController {
     public String verMaquinarias(Model model, @RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int page) {
         model.addAttribute("maquinarias", maquinariaService.buscarMaquinaria(keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
-        return "/Maquinarias/Ver_Maquinarias";
+        return "Maquinarias/Ver_Maquinarias";
     }
 
     @GetMapping("/Nueva_Maquinaria")

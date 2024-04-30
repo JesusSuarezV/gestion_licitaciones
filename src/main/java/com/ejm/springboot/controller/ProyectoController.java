@@ -63,6 +63,8 @@ public class ProyectoController {
             String ruta = "/Proyectos/Mis_Proyectos";
             model.addAttribute("keyword", keyword);
             model.addAttribute("ruta", ruta);
+            model.addAttribute("autor", true);
+
             return "Proyectos/Ver_Proyectos";
         } catch (Exception e) {
             return "Proyectos/Ver_Proyectos";
@@ -110,11 +112,15 @@ public class ProyectoController {
     @GetMapping("/{id}/Editar")//URL
     public String verFormularioDeEditarProyectos(@PathVariable Long id, Model model) {
         Optional<Proyecto> optionalProyecto = proyectoService.obtenerProyecto(id);
-        if (optionalProyecto.isPresent()) {
-            model.addAttribute("proyecto", proyectoService.obtenerProyecto(id));
 
-            model.addAttribute("edit", "edit");
-            return "Proyectos/Formulario_Proyecto";
+        if (optionalProyecto.isPresent()) {
+            if (optionalProyecto.get().getCreador().getUsername().equals(sesionService.getUsernameFromSession())) {
+                model.addAttribute("proyecto", proyectoService.obtenerProyecto(id));
+
+                model.addAttribute("edit", "edit");
+                return "Proyectos/Formulario_Proyecto";
+            }
+            else return "redirect:/Proyectos";
         } else return "redirect:/Proyectos?errorProyecto";
 
     }
@@ -129,34 +135,35 @@ public class ProyectoController {
 
     @GetMapping("/{id}/Eliminar")//URL
     public String ocultarProyecto(@PathVariable Long id, Model model) {
-
-        if (!proyectoService.ocultarProyecto(id)) return "redirect:/Proyectos/Mis_Proyectos?errorOcultar";
-        else return "redirect:/Proyectos/Mis_Proyectos?exitoOcultar";
-
+        if (proyectoService.obtenerProyecto(id).get().getCreador().getUsername().equals(sesionService.getUsernameFromSession())) {
+            if (!proyectoService.ocultarProyecto(id)) return "redirect:/Proyectos/Mis_Proyectos?errorOcultar";
+            else return "redirect:/Proyectos/Mis_Proyectos?exitoOcultar";
+        }
+        else return "redirect:/Proyectos";
     }
 
     @GetMapping("/{id}/Visualizar")
     public String visualizarProyecto(@PathVariable Long id, Model model) {
         Proyecto proyecto = proyectoService.obtenerProyecto(id).get();
-        String htmlContent="";
-        model.addAttribute("proyecto",proyecto);
+        String htmlContent = "";
+        model.addAttribute("proyecto", proyecto);
         List<Subproyecto> subproyectos = subproyectoRepository.findByProyectoAndEnabledTrueOrderByNombreAsc(proyecto);
         double contadorItem = 0;
         double contadorAPU = 0;
 
 
-        for (Subproyecto subproyecto:subproyectos){
-            htmlContent+="<tr><td colspan='7'><strong>" + subproyecto.getNombre() + "</strong></td></tr>";
+        for (Subproyecto subproyecto : subproyectos) {
+            htmlContent += "<tr><td colspan='7'><strong>" + subproyecto.getNombre() + "</strong></td></tr>";
             List<ItemSubproyecto> itemSubproyectos = itemSubproyectoRepository.findBySubproyectoAndEnabledTrueOrderByItem_NombreAsc(subproyecto);
-            contadorItem=0;
+            contadorItem = 0;
             for (ItemSubproyecto itemSubproyecto : itemSubproyectos) {
                 contadorItem++;
-                htmlContent+="<tr><td><strong>"+ contadorItem  +"</strong></td><td><strong>" + itemSubproyecto.getItem().getNombre() + "</strong></td><td></td><td></td><td></td><td></td><td><strong>$ " + itemSubproyecto.getValorCapitulo() + "</strong></td></tr>";
+                htmlContent += "<tr><td><strong>" + contadorItem + "</strong></td><td><strong>" + itemSubproyecto.getItem().getNombre() + "</strong></td><td></td><td></td><td></td><td></td><td><strong>$ " + itemSubproyecto.getValorCapitulo() + "</strong></td></tr>";
                 List<APUItemSubproyecto> apuItemSubproyectos = apuItemSubproyectoRepository.findByItemSubproyectoAndEnabledTrueOrderByApu_NombreAsc(itemSubproyecto);
                 contadorAPU = 0;
-                for (APUItemSubproyecto apuItemSubproyecto:apuItemSubproyectos){
-                    contadorAPU ++;
-                    htmlContent+="<tr><td><strong>"+ (int)contadorItem + "." + (int)contadorAPU  +"</strong></td><td>" + apuItemSubproyecto.getApu().getNombre() + "</td><td>"+ apuItemSubproyecto.getApu().getUnidad() +"</td><td>"+ Math.round(apuItemSubproyecto.getCantidad()*100d)/100d +"</td><td>$ " + apuItemSubproyecto.getValorUnitario() + "</td><td>$ "+ apuItemSubproyecto.getValorParcial() +"</td><td></td></tr>";
+                for (APUItemSubproyecto apuItemSubproyecto : apuItemSubproyectos) {
+                    contadorAPU++;
+                    htmlContent += "<tr><td><strong>" + (int) contadorItem + "." + (int) contadorAPU + "</strong></td><td>" + apuItemSubproyecto.getApu().getNombre() + "</td><td>" + apuItemSubproyecto.getApu().getUnidad() + "</td><td>" + Math.round(apuItemSubproyecto.getCantidad() * 100d) / 100d + "</td><td>$ " + apuItemSubproyecto.getValorUnitario() + "</td><td>$ " + apuItemSubproyecto.getValorParcial() + "</td><td></td></tr>";
 
                 }
             }

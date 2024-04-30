@@ -22,7 +22,7 @@ public class ItemController {
 
         model.addAttribute("items", itemService.buscarItem(keyword, PageRequest.of(page - 1, 3)));
         model.addAttribute("keyword", keyword);
-        return "/Items/Ver_Items";
+        return "Items/Ver_Items";
 
     }
 
